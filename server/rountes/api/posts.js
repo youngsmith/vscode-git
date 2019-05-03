@@ -21,19 +21,22 @@ router.get('/', (req,res)=>{
 
 // add post
 router.post('/',(req,res)=>{
-    console.log('request to api/post by post method');
+    let date = new Date();
     console.log(req.body.data);
     const Post = new post({
         _id: new mongoose.Types.ObjectId(),
         data: req.body.data,
-        createdAt: new Date()
+        createdAt: `${date.getFullYear()} / ${date.getMonth() + 1} / ${date.getDate()}  ${date.getHours()}:${date.getMinutes()}`
     });
     Post
         .save()
         .then((result)=>{
             res.status(201).json({msg:'inserted!'});
         })
-        .catch(err => res.status(500).json({msg:err}));
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({msg:err})
+        });
 });
 
 
