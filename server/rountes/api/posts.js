@@ -25,7 +25,8 @@ router.post('/',(req,res)=>{
     console.log(req.body.data);
     const Post = new post({
         _id: new mongoose.Types.ObjectId(),
-        data: req.body.data
+        data: req.body.data,
+        createdAt: new Date()
     });
     Post
         .save()
@@ -38,7 +39,8 @@ router.post('/',(req,res)=>{
 
 // delete post
 router.delete('/:id',async (req,res)=>{
-    const result = await post.deleteOne({_id: new mongoose.ObjectId(req.params.id)});
+    console.log(req.params.id)
+    const result = await post.deleteOne({_id: new mongoose.Types.ObjectId(req.params.id)});
     res.json({msg:result});
 });
 
